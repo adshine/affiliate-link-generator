@@ -30,5 +30,15 @@
     "globals": "^15.9.0",
     "typescript": "^5.3",
     "vite": "^5"
-  }
+  },
+  "author": {
+    "name": "Adebimpe Omolaso",
+    "url": "https://github.com/adshine"
+  },
+  "contributors": [
+    {
+      "name": "Olabode Felix",
+      "role": "Design Collaborator"
+    }
+  ]
 }
