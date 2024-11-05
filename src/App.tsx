@@ -1,46 +1,257 @@
-import { framer, CanvasNode } from "framer-plugin"
+import { framer } from "framer-plugin"
 import { useState, useEffect } from "react"
 import "./App.css"
 
-framer.showUI({
-    position: "top right",
-    width: 240,
-    height: 95,
-})
-
-function useSelection() {
-    const [selection, setSelection] = useState<CanvasNode[]>([])
-
-    useEffect(() => {
-        return framer.subscribeToSelection(setSelection)
-    }, [])
-
-    return selection
-}
+// Create a store key for the partner ID
+const STORE_KEY = "affiliate-link-generator-partner-id"
 
 export function App() {
-    const selection = useSelection()
-    const layer = selection.length === 1 ? "layer" : "layers"
+    const [remixLink, setRemixLink] = useState("")
+    const [partnerId, setPartnerId] = useState("")
+    const [generatedLink, setGeneratedLink] = useState("")
+    const [copied, setCopied] = useState(false)
 
-    const handleAddSvg = async () => {
-        await framer.addSVG({
-            svg: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="#999" d="M20 0v8h-8L4 0ZM4 8h8l8 8h-8v8l-8-8Z"/></svg>`,
-            name: "Logo.svg",
-        })
+    // Load the stored partner ID when the plugin opens
+    useEffect(() => {
+        const loadStoredPartnerId = () => {
+            try {
+                const storedId = localStorage.getItem(STORE_KEY)
+                if (storedId) {
+                    setPartnerId(storedId)
+                }
+            } catch (error) {
+                console.error("Failed to load partner ID:", error)
+            }
+        }
+        
+        loadStoredPartnerId()
+    }, [])
+
+    // Save the partner ID whenever it changes
+    const handlePartnerIdChange = (newValue: string) => {
+        setPartnerId(newValue)
+        try {
+            localStorage.setItem(STORE_KEY, newValue)
+        } catch (error) {
+            console.error("Failed to save partner ID:", error)
+        }
     }
 
+    const generateAffiliateLink = () => {
+        if (!remixLink || !partnerId) {
+            framer.notify("Please fill in both fields", { variant: "error" })
+            return
+        }
+
+        try {
+            const baseUrl = remixLink.split('&via=')[0]
+            const cleanPartnerId = partnerId.trim().toLowerCase()
+            const newLink = `${baseUrl}&via=${cleanPartnerId}`
+            setGeneratedLink(newLink)
+            framer.notify("Link generated successfully!", { variant: "success" })
+        } catch (error) {
+            framer.notify("Please enter a valid Framer project URL", { variant: "error" })
+        }
+    }
+
+    const copyToClipboard = async () => {
+        if (!generatedLink) return
+        try {
+            await navigator.clipboard.writeText(generatedLink)
+            setCopied(true)
+            framer.notify("Copied to clipboard!", { variant: "success" })
+            setTimeout(() => setCopied(false), 2000)
+        } catch (error) {
+            framer.notify("Failed to copy to clipboard", { variant: "error" })
+        }
+    }
+
+    // Update theme detection
+    useEffect(() => {
+        const updateTheme = () => {
+            // Check if we're in Framer's light mode
+            const isLightMode = document.querySelector('html')?.classList.contains('framer-light')
+            document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark')
+        }
+        
+        // Initial theme check
+        updateTheme()
+
+        // Create observer to watch for theme changes
+        const observer = new MutationObserver(updateTheme)
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        })
+
+        return () => observer.disconnect()
+    }, [])
+
+    // Update the UI size effect
+    useEffect(() => {
+        framer.showUI({
+            width: 340,
+            height: generatedLink ? 600 : 540,
+            position: "top right"
+        })
+    }, [generatedLink])
+
+    // Update the generateAndCopyRemixLink function
+    const generateAndCopyRemixLink = async () => {
+        try {
+            // Get the current project URL from window location
+            const projectUrl = window.location.href
+            
+            // Check if we're in a Framer project
+            if (projectUrl.includes('framer.com/projects/')) {
+                // Add the duplicate parameter if not already present
+                const remixUrl = projectUrl.includes('?duplicate=') 
+                    ? projectUrl 
+                    : `${projectUrl}?duplicate=true`
+                
+                // Update the input and copy to clipboard
+                setRemixLink(remixUrl)
+                await navigator.clipboard.writeText(remixUrl)
+                
+                framer.notify("Remix link generated and copied!", { 
+                    variant: "success",
+                    durationMs: 3000
+                })
+            } else {
+                // If we can't get the project URL, show an error
+                framer.notify("Please open this plugin in a Framer project", { 
+                    variant: "error",
+                    durationMs: 3000
+                })
+            }
+        } catch (error) {
+            console.error("Failed to generate remix link:", error)
+            framer.notify("Failed to generate remix link", { variant: "error" })
+        }
+    }
+
+    // Update the input section in your JSX
+    <div className="input-section">
+        <div className="input-group">
+            <div className="partner-id-label"> {/* Reuse the same style as partner ID */}
+                <label>Remix Link</label>
+                <a 
+                    href="#" 
+                    onClick={(e) => {
+                        e.preventDefault()
+                        generateAndCopyRemixLink()
+                    }} 
+                    className="text-link"
+                >
+                    Generate Link
+                </a>
+            </div>
+            <input
+                type="text"
+                value={remixLink}
+                onChange={(e) => setRemixLink(e.target.value)}
+                placeholder="https://framer.com/projects/new?duplicate=..."
+            />
+        </div>
+
+        <div className="input-group">
+            <div className="partner-id-label">
+                <label>Your partner ID</label>
+                <a href="https://framer.com/partner" target="_blank" rel="noopener" className="text-link">
+                    Don't have a partner ID?
+                </a>
+            </div>
+            <input 
+                type="text"
+                value={partnerId}
+                onChange={(e) => handlePartnerIdChange(e.target.value)}
+                placeholder="Your username"
+            />
+        </div>
+    </div>
+
+    // For the logo, let's use inline SVG instead of trying to load an external file
     return (
         <main>
-            <p>
-                Welcome! Check out the{" "}
-                <a href="https://framer.com/developers/plugins/introduction" target="_blank">
-                    Docs
-                </a>{" "}
-                to start. You have {selection.length} {layer} selected.
-            </p>
-            <button className="framer-button-primary" onClick={handleAddSvg}>
-                Insert Logo
-            </button>
+            <div className="content">
+                <div className="hero-section">
+                    <div className="header">
+                        <img 
+                            src="/aff_logo.png" 
+                            alt="Affiliate Logo" 
+                            className="aff-logo"
+                        />
+                    </div>
+
+                    <p className="description">
+                        Generate your Framer affiliate link for template and project submissions to earn 50% commission from Framer.
+                    </p>
+
+                    <a 
+                        href="https://buy.stripe.com/fZe18a0KHc0M4kU8wx"
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="coffee-button"
+                    >
+                        Buy us a coffee
+                    </a>
+                </div>
+
+                <div className="input-section">
+                    <div className="input-group">
+                        <div className="partner-id-label">
+                            <label>Remix Link</label>
+                        </div>
+                        <input
+                            type="text"
+                            value={remixLink}
+                            onChange={(e) => setRemixLink(e.target.value)}
+                            placeholder="https://framer.com/projects/new?duplicate=..."
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <div className="partner-id-label">
+                            <label>Your partner ID</label>
+                            <a href="https://framer.com/partner" target="_blank" rel="noopener" className="text-link">
+                                Don't have a partner ID?
+                            </a>
+                        </div>
+                        <input 
+                            type="text"
+                            value={partnerId}
+                            onChange={(e) => handlePartnerIdChange(e.target.value)}
+                            placeholder="Your username"
+                        />
+                    </div>
+                </div>
+
+                <button className="generate-button" onClick={generateAffiliateLink}>
+                    Generate Remix Link
+                </button>
+
+                {generatedLink && (
+                    <div className="input-group">
+                        <div className="copy-container">
+                            <input type="text" value={generatedLink} readOnly />
+                            <button className="copy-button" onClick={copyToClipboard}>
+                                {copied ? 'Copied!' : 'Copy'}
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                <div className="footer">
+                    Created by:{' '}
+                    <a href="mailto:akinshaywai@gmail.com" className="footer-link">
+                        Olabode Felix
+                    </a>
+                    {' & '}
+                    <a href="mailto:danieladebimpe@gmail.com" className="footer-link">
+                        Adebimpe Omolaso
+                    </a>
+                </div>
+            </div>
         </main>
     )
 }
