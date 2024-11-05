@@ -6,7 +6,12 @@
 
 A Framer plugin that helps designers and creators generate and manage affiliate links directly within their Framer projects.
 
-## Features
+## Authors
+
+- **Primary Author**: Adebimpe Omolaso
+- **Design Collaborator**: Olabode Felix
+
+## About
 
 - Generate affiliate links for various platforms
 - Easy-to-use interface within Framer
