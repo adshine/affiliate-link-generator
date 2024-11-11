@@ -91,7 +91,7 @@ export function App() {
     useEffect(() => {
         framer.showUI({
             width: 340,
-            height: generatedLink ? 600 : 540,
+            height: generatedLink ? 575 : 525,
             position: "top right"
         })
     }, [generatedLink])
