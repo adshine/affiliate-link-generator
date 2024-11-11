@@ -1,6 +1,7 @@
 /* Base theme (dark) */
 :root {
     color-scheme: light dark;
+    --link-color: #FFD700;
 }
 
 /* Dark theme */
@@ -33,6 +34,7 @@
         --icon-fg: #000000;
         --color-accent: color-mix(in srgb, var(--yellow-base) 90%, orange 10%);
         --color-accent-hover: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
+        --link-color: #866F14;
     }
 }
 
@@ -129,20 +131,16 @@ label {
 }
 
 .text-link {
-    color: var(--color-accent);
+    color: var(--link-color);
     text-decoration: none;
     font-size: 13px;
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
-[data-theme="light"] .text-link {
-    color: #E4A951;
-}
-
 .text-link:hover {
     text-decoration: underline;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 input {

@@ -133,17 +133,15 @@ export function App() {
     // Update the input section in your JSX
     <div className="input-section">
         <div className="input-group">
-            <div className="partner-id-label"> {/* Reuse the same style as partner ID */}
+            <div className="partner-id-label">
                 <label>Remix Link</label>
                 <a 
-                    href="#" 
-                    onClick={(e) => {
-                        e.preventDefault()
-                        generateAndCopyRemixLink()
-                    }} 
+                    href="https://www.framer.com/help/articles/how-to-create-a-remix-link/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-link"
                 >
-                    Generate Link
+                    How to create a remix link?
                 </a>
             </div>
             <input
@@ -201,6 +199,14 @@ export function App() {
                     <div className="input-group">
                         <div className="partner-id-label">
                             <label>Remix Link</label>
+                            <a 
+                                href="https://www.framer.com/help/articles/how-to-create-a-remix-link/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-link"
+                            >
+                                How to create a remix link?
+                            </a>
                         </div>
                         <input
                             type="text"
