@@ -46,7 +46,7 @@ body {
 }
 
 main {
-    padding: 12px 16px 12px;
+    padding: 12px 16px 0;
     width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -59,6 +59,7 @@ main {
     width: 100%;
     max-width: 308px;
     margin: 0 auto;
+    padding-bottom: 0;
 }
 
 .header {
@@ -200,7 +201,12 @@ input::placeholder {
     color: #000000;
     font-size: 12px;
     cursor: pointer;
-    max-width: 64px;
+    display: flex;
+    align-self: start;
+    align-items: center;
+    justify-content: center;
+    max-width: 80px;  
+
 }
 
 .copy-button:hover {
@@ -211,10 +217,11 @@ input::placeholder {
     text-align: center;
     color: var(--color-text);
     font-size: 13px;
-    padding-top: 12px;
-    padding-bottom: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
     border-top: 1px solid var(--color-border);
-    line-height: 1.5;
+    line-height: 1.4;
+    margin-bottom: -12px;
 }
 
 .input-group input {
@@ -262,7 +269,7 @@ input::placeholder {
 
 /* Adjust main padding */
 main {
-    padding: 12px 16px 12px;
+    padding: 12px 16px 0;
     width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -276,6 +283,7 @@ main {
     width: 100%;
     max-width: 308px;
     margin: 0 auto;
+    padding-bottom: 0;
 }
 
 /* Update theme-specific colors */
@@ -304,6 +312,9 @@ main {
     text-align: center;
     color: var(--color-text);
     font-size: 13px;
-    padding-top: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     border-top: 1px solid var(--color-border);
+    line-height: 1.4;
+    margin-bottom: 0px;
 }
