@@ -6,11 +6,11 @@
 
 /* Dark theme */
 :root {
-    --color-bg: #0c0c0c;
+    --color-bg: --framer-color-bg;
     --color-bg-hover: rgba(255, 255, 255, 0.06);
     --color-border: rgba(255, 255, 255, 0.1);
-    --color-text: rgba(255, 255, 255, 0.9);
-    --color-text-secondary: rgba(255, 255, 255, 0.4);
+    --color-text: --framer-color-text;
+    --color-text-secondary: --framer-color-text-secondary;
     --yellow-base: #FFD700;
     --color-accent: color-mix(in srgb, var(--yellow-base) 90%, orange 10%);
     --color-accent-hover: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
@@ -24,11 +24,11 @@
 /* Light theme */
 @media (prefers-color-scheme: light) {
     :root {
-        --color-bg: #ffffff;
+        --color-bg: --framer-color-bg;
         --color-bg-hover: rgba(0, 0, 0, 0.06);
         --color-border: rgba(0, 0, 0, 0.1);
-        --color-text: rgba(0, 0, 0, 0.9);
-        --color-text-secondary: rgba(0, 0, 0, 0.4);
+        --color-text: --framer-color-text;
+        --color-text-secondary: --framer-color-text-secondary;
         --input-bg: rgba(0, 0, 0, 0.03);
         --icon-bg: #FCCD43;
         --icon-fg: #000000;
