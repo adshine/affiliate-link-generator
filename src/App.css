@@ -1,46 +1,54 @@
-/* Base theme (dark) */
-:root {
-    color-scheme: light dark;
-    --link-color: #FFD700;
-}
+body {
+    font-family: var(--framer-font-family);
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+  
+    color: var(--framer-color-text);
+    background: var(--framer-color-bg);
+  
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-/* Dark theme */
-:root {
-    --color-bg: --framer-color-bg;
+/* Dark theme specific styles */
+[data-framer-theme="dark"] {
+    --color-bg: var(--framer-color-bg);
     --color-bg-hover: rgba(255, 255, 255, 0.06);
-    --color-border: rgba(255, 255, 255, 0.1);
-    --color-text: --framer-color-text;
-    --color-text-secondary: --framer-color-text-secondary;
+    --color-border: var(--framer-color-divider);
+    --color-text: var(--framer-color-text);
+    --color-text-secondary: var(--framer-color-text-secondary);
     --yellow-base: #FFD700;
     --color-accent: color-mix(in srgb, var(--yellow-base) 90%, orange 10%);
     --color-accent-hover: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
     --input-bg: rgba(255, 255, 255, 0.06);
     --icon-bg: #FCCD43;
     --icon-fg: #000000;
-    --hero-bg-dark: color-mix(in srgb, var(--yellow-base) 15%, transparent 85%);
-    --hero-bg-light: color-mix(in srgb, var(--yellow-base) 10%, white 90%);
+    --hero-bg: color-mix(in srgb, var(--yellow-base) 15%, transparent 85%);
+    --link-color: #FFD700;
 }
 
-/* Light theme */
-@media (prefers-color-scheme: light) {
-    :root {
-        --color-bg: --framer-color-bg;
-        --color-bg-hover: rgba(0, 0, 0, 0.06);
-        --color-border: rgba(0, 0, 0, 0.1);
-        --color-text: --framer-color-text;
-        --color-text-secondary: --framer-color-text-secondary;
-        --input-bg: rgba(0, 0, 0, 0.03);
-        --icon-bg: #FCCD43;
-        --icon-fg: #000000;
-        --color-accent: color-mix(in srgb, var(--yellow-base) 90%, orange 10%);
-        --color-accent-hover: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
-        --link-color: #866F14;
-    }
+/* Light theme specific styles */
+[data-framer-theme="light"] {
+    --color-bg: var(--framer-color-bg);
+    --color-bg-hover: rgba(0, 0, 0, 0.06);
+    --color-border: var(--framer-color-divider);
+    --color-text: var(--framer-color-text);
+    --color-text-secondary: var(--framer-color-text-secondary);
+    --input-bg: rgba(0, 0, 0, 0.03);
+    --icon-bg: #FCCD43;
+    --icon-fg: #000000;
+    --yellow-base: #FFD700;
+    --color-accent: color-mix(in srgb, var(--yellow-base) 90%, orange 10%);
+    --color-accent-hover: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
+    --hero-bg: color-mix(in srgb, var(--yellow-base) 10%, white 50%);
+    --link-color: #866F14;
 }
 
 body {
     margin: 0;
-    background: var(--color-bg);
+    /* background: var(--color-bg); */
     color: var(--color-text);
     font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
 }
@@ -85,24 +93,41 @@ main {
 }
 
 .coffee-button {
-    width: 100%;
-    padding: 8px 12px;
-    background: var(--input-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    color: var(--color-text);
-    font-size: 13px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid;
+    border-radius: 20px;
+    color: var(--framer-color-text);
+    font-size: 14px;
+    font-weight: 500;
     transition: all 0.2s ease;
-    display: block;
-    box-sizing: border-box;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Light mode specific */
+[data-framer-theme="light"] .coffee-button {
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* Dark mode specific */
+[data-framer-theme="dark"] .coffee-button {
+    border-color: color-mix(in srgb, var(--yellow-base) 30%, transparent);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .coffee-button:hover {
-    background: var(--color-bg-hover);
-    border-color: var(--color-text-secondary);
+    background: color-mix(in srgb, var(--yellow-base) 10%, transparent);
+    border-color: var(--yellow-base);
+    color: var(--yellow-base);
+}
+
+.coffee-button::before {
+    content: "☕";
+    font-size: 16px;
 }
 
 .input-section {
@@ -161,7 +186,11 @@ input {
 input::placeholder {
     color: var(--color-text-secondary);
 }
+input:focus {
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.3);
+    outline: 0.2px solid var(--yellow-base);
 
+}
 .generate-button {
     width: 100%;
     padding: 16px;
