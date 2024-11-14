@@ -215,7 +215,7 @@ input:focus {
 .generate-button:hover {
     background: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
 }
-.generate-button:focus {
+.generate-button:focus  {
     background: color-mix(in srgb, var(--yellow-base) 20%, var(--framer-color-bg) 80%);
     color: var(--yellow-base);
     transform: scale(0.99);
@@ -252,6 +252,21 @@ input:focus {
 
 .copy-button:hover {
     background: var(--color-accent-hover);
+}
+
+
+/* Hover state */
+.copy-button:hover {
+    background: color-mix(in srgb, var(--yellow-base) 85%, white 15%);
+}
+.copy-button:focus  {
+    background: color-mix(in srgb, var(--yellow-base) 20%, var(--framer-color-bg) 80%);
+    color: var(--yellow-base);
+}
+
+[data-framer-theme="light"] .copy-button:focus {
+    background: color-mix(in srgb, var(--yellow-base) 20%, var(--framer-color-bg) 80%);
+    color: var(--framer-color-text);
 }
 
 .footer {
