@@ -124,6 +124,10 @@ main {
     color: var(--yellow-base);
 }
 
+[data-framer-theme="light"] .coffee-button:hover {
+    color: var(--link-color);
+}
+
 .coffee-button::before {
     content: "☕";
     font-size: 16px;
