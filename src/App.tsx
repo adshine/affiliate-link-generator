@@ -181,7 +181,7 @@ export function App() {
                     </a>
                     {' & '}
                     <a href="mailto:danieladebimpe@gmail.com" className="footer-link">
-                        Adebimpe Omolaso
+                        Adebimpe Omolaso and others
                     </a>
                 </div>
             </div>
