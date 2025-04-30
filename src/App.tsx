@@ -146,7 +146,7 @@ export function App() {
                     <div className="input-group">
                         <div className="partner-id-label">
                             <label>Your partner ID</label>
-                            <a href="https://framer.com/partner" target="_blank" rel="noopener" className="text-link">
+                            <a href="https://www.framer.com/creators/" target="_blank" rel="noopener" className="text-link">
                                 Don't have a partner ID?
                             </a>
                         </div>
@@ -166,7 +166,12 @@ export function App() {
                 {generatedLink && (
                     <div className="input-group">
                         <div className="copy-container">
-                            <input type="text" value={generatedLink} readOnly />
+                            <input 
+                                type="text" 
+                                value={generatedLink} 
+                                readOnly 
+                                aria-label="Generated affiliate link"
+                            />
                             <button className="copy-button" onClick={copyToClipboard}>
                                 {copied ? 'Copied!' : 'Copy'}
                             </button>

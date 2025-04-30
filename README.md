@@ -9,7 +9,7 @@ A Framer plugin that helps designers and creators generate and manage affiliate 
 ## Authors
 
 - **Primary Author**: Adebimpe Omolaso
-- **Design Collaborator**: Olabode Felix
+- **Design Collaborator**: Olabode Felix and others
 
 ## About
 
