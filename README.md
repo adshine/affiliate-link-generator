@@ -28,12 +28,14 @@ A Framer plugin that helps designers and creators generate and manage affiliate 
 ## Local Development Setup
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/affiliate-link-gen.git
 cd affiliate-link-gen
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -41,6 +43,7 @@ yarn install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 # or
